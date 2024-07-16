@@ -1,5 +1,5 @@
 @base_url = http://localhost:3333
-@authToken = {{authenticate.response.body.acess_token}} // Pegando o token de autenticação
+@authToken = {{authenticate.response.body.access_token}} // Pegando o token de autenticação
 
 # @name create_accounts
 POST {{base_url}}/accounts
@@ -31,8 +31,8 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "Qual a sua cor favorita?",
-  "content": "Gostaria de saber qual a cor favorita de vocês"
+  "title": "1Qual a sua cor favorita?",
+  "content": "1Gostaria de saber qual a cor favorita de vocês"
 }
 
 ###
