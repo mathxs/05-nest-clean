@@ -32,7 +32,7 @@ export class FetchRecentQuestionController {
     if(result.isLeft()){
       throw new Error()
     }
-    const questions = result.value.questions 
+    const questions = result.value.questions
     return { questions: questions.map(QuestionPresenter.toHTTP) }
   }
 }
