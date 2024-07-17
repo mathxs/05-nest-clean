@@ -31,7 +31,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "1Q123123ual a sua cor favorita?",
+  "title": "1Q123123ual 1232131a sua cor favorita?",
   "content": "1G12312ostaria de saber qual a cor favorita de vocês"
 }
 
