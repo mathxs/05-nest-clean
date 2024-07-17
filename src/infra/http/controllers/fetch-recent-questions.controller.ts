@@ -29,7 +29,7 @@ export class FetchRecentQuestionController {
       page,
     })
 
-    if(result.isLeft()){
+    if (result.isLeft()) {
       throw new Error()
     }
     const questions = result.value.questions
