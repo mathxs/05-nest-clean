@@ -16,7 +16,10 @@ export class QuestionComment extends Comment<QuestionCommentProps> {
     id?: UniqueEntityID,
   ) {
     const questionComent = new QuestionComment(
-      { ...props, createdAt: props.createdAt ?? new Date() },
+      {
+        ...props,
+        createdAt: props.createdAt ?? new Date(),
+      },
       id,
     )
 

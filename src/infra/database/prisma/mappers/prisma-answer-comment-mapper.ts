@@ -14,7 +14,7 @@ export class PrismaAnswerCommentMapper {
         authorId: new UniqueEntityID(raw.authorId),
         answerId: new UniqueEntityID(raw.answerId),
         createdAt: raw.createdAt,
-        updateAt: raw.updatedAt,
+        updatedAt: raw.updatedAt,
       },
       new UniqueEntityID(raw.id),
     )
@@ -26,10 +26,10 @@ export class PrismaAnswerCommentMapper {
     return {
       id: answerComment.id.toString(),
       authorId: answerComment.authorId.toString(),
-      questionId: answerComment.answerId.toString(),
+      answerId: answerComment.answerId.toString(),
       content: answerComment.content,
       createdAt: answerComment.createdAt,
-      updatedAt: answerComment.updateAt,
+      updatedAt: answerComment.updatedAt,
     }
   }
 }

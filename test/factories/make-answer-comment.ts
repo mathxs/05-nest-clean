@@ -12,7 +12,7 @@ export function makeAnswerComment(
   override: Partial<AnswerCommentProps> = {},
   id?: UniqueEntityID,
 ) {
-  const answerComment = AnswerComment.create(
+  const answer = AnswerComment.create(
     {
       answerId: new UniqueEntityID(),
       authorId: new UniqueEntityID(),
@@ -22,7 +22,7 @@ export function makeAnswerComment(
     id,
   )
 
-  return answerComment
+  return answer
 }
 
 @Injectable()
@@ -31,12 +31,12 @@ export class AnswerCommentFactory {
   async makePrismaAnswerComment(
     data: Partial<AnswerCommentProps> = {},
   ): Promise<AnswerComment> {
-    const answercomment = makeAnswerComment(data)
+    const answerComment = makeAnswerComment(data)
 
     await this.prisma.comment.create({
-      data: PrismaAnswerCommentMapper.toPrisma(answercomment),
+      data: PrismaAnswerCommentMapper.toPrisma(answerComment),
     })
 
-    return answercomment
+    return answerComment
   }
 }

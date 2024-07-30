@@ -83,8 +83,9 @@ model Comment {
 
   question   Question? @relation(fields: [questionId], references: [id])
   questionId String?   @map("question_id")
-  answer     Answer?   @relation(fields: [answerId], references: [id])
-  answerId   String?   @map("answer_id")
+
+  answer   Answer? @relation(fields: [answerId], references: [id])
+  answerId String? @map("answer_id")
 
   @@map("comments")
 }
