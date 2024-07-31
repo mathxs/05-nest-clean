@@ -28,7 +28,7 @@ describe('Fetch Question Comments', () => {
       page: 1,
     })
 
-    expect(result.value?.questionComments).toHaveLength(3)
+    expect(result.value?.comments).toHaveLength(3)
   })
 
   test('should be able to fetch paginated recent comments', async () => {
@@ -43,6 +43,6 @@ describe('Fetch Question Comments', () => {
       page: 2,
     })
 
-    expect(result.value?.questionComments).toHaveLength(2)
+    expect(result.value?.comments).toHaveLength(2)
   })
 })
