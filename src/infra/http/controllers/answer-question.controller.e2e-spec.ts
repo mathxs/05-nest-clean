@@ -1,50 +1,58 @@
-import { INestApplication } from '@nestjs/common'
-import { Test } from '@nestjs/testing'
-import request from 'supertest'
-import { JwtService } from '@nestjs/jwt'
 import { AppModule } from '@/infra/app.module'
-import { StudentFactory } from 'test/factories/make-student'
 import { DatabaseModule } from '@/infra/database/database.module'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { INestApplication } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { Test } from '@nestjs/testing'
+import request from 'supertest'
+import { AttachmentFactory } from 'test/factories/make-attachments'
 import { QuestionFactory } from 'test/factories/make-question'
+import { StudentFactory } from 'test/factories/make-student'
 
-describe('Answer question (E2E)', () => {
+describe('Answer Question (E2E)', () => {
   let app: INestApplication
-  let studentFactory: StudentFactory
-  let jwt: JwtService
   let prisma: PrismaService
+  let jwt: JwtService
   let questionFactory: QuestionFactory
+  let studentFactory: StudentFactory
+  let attachmentFactory: AttachmentFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [StudentFactory, QuestionFactory],
+      providers: [StudentFactory, QuestionFactory, AttachmentFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
-    jwt = moduleRef.get(JwtService)
-    studentFactory = moduleRef.get(StudentFactory)
-    questionFactory = moduleRef.get(QuestionFactory)
     prisma = moduleRef.get(PrismaService)
+    jwt = moduleRef.get(JwtService)
+    questionFactory = moduleRef.get(QuestionFactory)
+    studentFactory = moduleRef.get(StudentFactory)
+    attachmentFactory = moduleRef.get(AttachmentFactory)
 
     await app.init()
   })
 
-  test('[POST] /questions/:questionId/answer', async () => {
+  test('[POST] /questions/:questionId/answers', async () => {
     const user = await studentFactory.makePrismaStudent()
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
-    const question = await questionFactory.makePrismaQuestion({
+    const quesiton = await questionFactory.makePrismaQuestion({
       authorId: user.id,
     })
 
-    const questionId = question.id.toString()
+    const questionId = quesiton.id.toString()
+
+    const attacment1 = await attachmentFactory.makePrismaAttachment()
+    const attacment2 = await attachmentFactory.makePrismaAttachment()
+
     const response = await request(app.getHttpServer())
-      .post(`/questions/${questionId}/answer`)
+      .post(`/questions/${questionId}/answers`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         content: 'New answer',
+        attachments: [attacment1.id.toString(), attacment2.id.toString()],
       })
 
     expect(response.statusCode).toBe(201)
@@ -56,5 +64,13 @@ describe('Answer question (E2E)', () => {
     })
 
     expect(answerOnDatabase).toBeTruthy()
+
+    const attachmentsOnDatabase = await prisma.attachment.findMany({
+      where: {
+        answerId: answerOnDatabase?.id,
+      },
+    })
+
+    expect(attachmentsOnDatabase).toHaveLength(2)
   })
 })

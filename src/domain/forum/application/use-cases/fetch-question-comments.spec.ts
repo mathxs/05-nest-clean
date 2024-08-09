@@ -1,27 +1,42 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { InMemoryQuestionsCommentsRepository } from 'test/repositories/in-memory-questions-comments-repository'
 import { FetchQuestionCommentsUseCase } from './fetch-question-comments'
+import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
 import { makeQuestionComment } from 'test/factories/make-question-comment'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
+import { InMemoryStudentRepository } from 'test/repositories/in-memory-students-repository'
+import { makeStudent } from 'test/factories/make-student'
 
-let inMemoryCommentRepository: InMemoryQuestionsCommentsRepository
+let inMemoryStudentRepository: InMemoryStudentRepository
+let inMemoryQuestionsCommentsRepository: InMemoryQuestionCommentsRepository
 let sut: FetchQuestionCommentsUseCase
 
-describe('Fetch Question Comments', () => {
+describe('Fetch Questions Comments', () => {
   beforeEach(() => {
-    inMemoryCommentRepository = new InMemoryQuestionsCommentsRepository()
-    sut = new FetchQuestionCommentsUseCase(inMemoryCommentRepository)
+    inMemoryStudentRepository = new InMemoryStudentRepository()
+    inMemoryQuestionsCommentsRepository =
+      new InMemoryQuestionCommentsRepository(inMemoryStudentRepository)
+    sut = new FetchQuestionCommentsUseCase(inMemoryQuestionsCommentsRepository)
   })
 
-  test('should be able to fetch recent comments', async () => {
-    await inMemoryCommentRepository.create(
-      makeQuestionComment({ questionId: new UniqueEntityID('question-1') }),
-    )
-    await inMemoryCommentRepository.create(
-      makeQuestionComment({ questionId: new UniqueEntityID('question-1') }),
-    )
-    await inMemoryCommentRepository.create(
-      makeQuestionComment({ questionId: new UniqueEntityID('question-1') }),
-    )
+  it('should be albe to fetch recents question comments', async () => {
+    const student = makeStudent({ name: 'Jonh Doe' })
+    inMemoryStudentRepository.items.push(student)
+
+    const comment1 = makeQuestionComment({
+      questionId: new UniqueEntityId('question-1'),
+      authorId: student.id,
+    })
+    const comment2 = makeQuestionComment({
+      questionId: new UniqueEntityId('question-1'),
+      authorId: student.id,
+    })
+    const comment3 = makeQuestionComment({
+      questionId: new UniqueEntityId('question-1'),
+      authorId: student.id,
+    })
+
+    await inMemoryQuestionsCommentsRepository.create(comment1)
+    await inMemoryQuestionsCommentsRepository.create(comment2)
+    await inMemoryQuestionsCommentsRepository.create(comment3)
 
     const result = await sut.execute({
       questionId: 'question-1',
@@ -29,12 +44,34 @@ describe('Fetch Question Comments', () => {
     })
 
     expect(result.value?.comments).toHaveLength(3)
+    expect(result.value?.comments).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          author: 'Jonh Doe',
+          commentId: comment1.id,
+        }),
+        expect.objectContaining({
+          author: 'Jonh Doe',
+          commentId: comment2.id,
+        }),
+        expect.objectContaining({
+          author: 'Jonh Doe',
+          commentId: comment3.id,
+        }),
+      ]),
+    )
   })
 
-  test('should be able to fetch paginated recent comments', async () => {
-    for (let i = 1; i <= 22; i++) {
-      await inMemoryCommentRepository.create(
-        makeQuestionComment({ questionId: new UniqueEntityID('question-1') }),
+  it('should be albe to fetch paginated recents question comments', async () => {
+    const student = makeStudent({ name: 'Jonh Doe' })
+    inMemoryStudentRepository.items.push(student)
+
+    for (let index = 1; index <= 22; index++) {
+      await inMemoryQuestionsCommentsRepository.create(
+        makeQuestionComment({
+          questionId: new UniqueEntityId('question-1'),
+          authorId: student.id,
+        }),
       )
     }
 

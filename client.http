@@ -1,43 +1,49 @@
-@base_url = http://localhost:3333
-@authToken = {{authenticate.response.body.access_token}} // Pegando o token de autenticação
+@baseUrl = http://localhost:3333
+@authToken = {{authenticate.response.body.accessToken}}
 
-# @name create_accounts
-POST {{base_url}}/accounts
+# @name create_account
+POST {{baseUrl}}/accounts
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "die4412123154go@teste.com.br",
-  "password": "123456"
+    "name": "Test Controller",
+    "email": "test@creago.org.br",
+    "password": "123456"
 }
 
 ###
 
 # @name authenticate
-POST {{base_url}}/sessions
+POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "diego@teste.com.br",
-  "password": "123456"
+    "email": "matheussantos@creago.org.br",
+    "password": "123456"
 }
 
 ###
 
-# @name create_questions
-POST {{base_url}}/questions
+# @name create_question
+POST {{baseUrl}}/questions
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "title": "1Q123123ual 1232131a sua cor favorita?",
-  "content": "1G12312ostaria de saber qual a cor favorita de vocês"
+    "title": "Titulo da perguta",
+    "content": "Conteúdo da pergunta"
 }
 
 ###
 
 # @name fetch_recent_questions
-GET {{base_url}}/questions?page=1
+GET {{baseUrl}}/questions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name get_question_by_slug
+GET {{baseUrl}}/questions/question-01
 Content-Type: application/json
 Authorization: Bearer {{authToken}}

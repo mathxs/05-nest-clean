@@ -1,29 +1,35 @@
 import { PrismaClient } from '@prisma/client'
-import { execSync } from 'child_process'
-import { randomUUID } from 'crypto'
-import 'dotenv/config'
+import { randomUUID } from 'node:crypto'
+import { config } from 'dotenv'
+import { execSync } from 'node:child_process'
+
+config({ path: '.env', override: true })
+config({ path: '.env.test', override: true })
 
 const prisma = new PrismaClient()
-const databaseURL = generateUniqueDataBaseURL(randomUUID())
 
-function generateUniqueDataBaseURL(schemaId: string) {
+function generateUniqueDatabaseUrl(schemaId: string) {
   if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL is not set')
+    throw new Error('Please provider a DATABASE_URL environment variable')
   }
   const url = new URL(process.env.DATABASE_URL)
+
   url.searchParams.set('schema', schemaId)
+
   return url.toString()
 }
 
+const schemaId = randomUUID()
+
 beforeAll(async () => {
-  process.env.DATABASE_URL = databaseURL
-  console.log('databaseURL: ', databaseURL)
+  const databaseUrl = generateUniqueDatabaseUrl(schemaId)
+
+  process.env.DATABASE_URL = databaseUrl
+
   execSync('npx prisma migrate deploy')
 })
 
 afterAll(async () => {
-  await prisma.$executeRawUnsafe(
-    `DROP SCHEMA IF EXISTS "${databaseURL}" CASCADE;`,
-  )
+  await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`)
   await prisma.$disconnect()
 })

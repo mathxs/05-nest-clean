@@ -3,11 +3,12 @@ import { Answer } from '../../enterprise/entities/answer'
 
 export abstract class AnswersRepository {
   abstract create(answer: Answer): Promise<void>
-  abstract delete(answer: Answer): Promise<void>
   abstract save(answer: Answer): Promise<void>
-  abstract findByID(id: string): Promise<Answer | null>
-  abstract findManyByQuestiondId(
+  abstract findById(answerId: string): Promise<Answer | null>
+  abstract findManyByQuestionId(
     questionId: string,
     params: PaginationParams,
   ): Promise<Answer[]>
+
+  abstract delete(answer: Answer): Promise<void>
 }

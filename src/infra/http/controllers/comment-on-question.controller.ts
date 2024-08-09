@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common'
 import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
-
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
@@ -15,8 +14,8 @@ import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/c
 const commentOnQuestionBodySchema = z.object({
   content: z.string(),
 })
-
 const bodyValidationPipe = new ZodValidationPipe(commentOnQuestionBodySchema)
+
 type CommentOnQuestionBodySchema = z.infer<typeof commentOnQuestionBodySchema>
 
 @Controller('/questions/:questionId/comments')
@@ -24,13 +23,14 @@ export class CommentOnQuestionController {
   constructor(private commentOnQuestion: CommentOnQuestionUseCase) {}
 
   @Post()
-  async handler(
-    @Body(bodyValidationPipe) body: CommentOnQuestionBodySchema,
+  async handle(
+    @Body(bodyValidationPipe)
+    body: CommentOnQuestionBodySchema,
     @CurrentUser() user: UserPayload,
     @Param('questionId') questionId: string,
   ) {
     const { content } = body
-    const { sub: userId } = user
+    const userId = user.sub
 
     const result = await this.commentOnQuestion.execute({
       content,
