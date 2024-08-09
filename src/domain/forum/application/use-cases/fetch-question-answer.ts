@@ -21,10 +21,9 @@ export class FetchQuestionAnswerCase {
     questionId,
     page,
   }: FetchQuestionAnswerCaseRequest): Promise<FetchQuestionAnswerCaseResponse> {
-    const answers = await this.answerQuestion.findManyByQuestionId(
-      questionId,
-      { page },
-    )
+    const answers = await this.answerQuestion.findManyByQuestionId(questionId, {
+      page,
+    })
 
     return right({ answers })
   }

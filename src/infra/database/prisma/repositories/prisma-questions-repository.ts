@@ -14,7 +14,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   ) {}
 
   async create(question: Question): Promise<void> {
-    const data = PrismaQuestionMapper.toPersistence(question)
+    const data = PrismaQuestionMapper.toPrisma(question)
     await this.prisma.question.create({
       data,
     })
@@ -25,7 +25,7 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
   }
 
   async save(question: Question): Promise<void> {
-    const data = PrismaQuestionMapper.toPersistence(question)
+    const data = PrismaQuestionMapper.toPrisma(question)
     await Promise.all([
       this.prisma.question.update({
         where: {

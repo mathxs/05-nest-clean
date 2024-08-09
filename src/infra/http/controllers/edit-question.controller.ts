@@ -10,7 +10,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-questions'
+import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-question'
 
 const editQuestionBodySchema = z.object({
   title: z.string(),

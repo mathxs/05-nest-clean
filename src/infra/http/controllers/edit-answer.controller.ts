@@ -10,7 +10,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { UserPayload } from '@/infra/auth/jwt.strategy'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { EditAnswerUseCase } from '@/domain/forum/application/use-cases/edit-answer'
+import { EditAnswersUseCase } from '@/domain/forum/application/use-cases/edit-answer'
 
 const editAnswerBodySchema = z.object({
   content: z.string(),
@@ -22,7 +22,7 @@ type EditAnswerBodySchema = z.infer<typeof editAnswerBodySchema>
 
 @Controller('/answers/:id')
 export class EditAnswerController {
-  constructor(private editAnswer: EditAnswerUseCase) {}
+  constructor(private editAnswer: EditAnswersUseCase) {}
 
   @Put()
   @HttpCode(204)
@@ -39,7 +39,7 @@ export class EditAnswerController {
       content,
       authorId: userId,
       attachmentsIds: attachments,
-      answerId,
+      answersId: answerId,
     })
 
     if (result.isLeft()) {

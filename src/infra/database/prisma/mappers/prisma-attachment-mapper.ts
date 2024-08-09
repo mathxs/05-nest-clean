@@ -2,7 +2,7 @@ import { Attachment } from '@/domain/forum/enterprise/entities/attachment'
 import { Prisma } from '@prisma/client'
 
 export class PrismaAttachmentMapper {
-  static toPersistence(
+  static toPrisma(
     attachment: Attachment,
   ): Prisma.AttachmentUncheckedCreateInput {
     return {

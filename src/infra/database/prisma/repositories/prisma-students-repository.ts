@@ -1,15 +1,15 @@
-import { StudentsRepository } from '@/domain/forum/application/repositories/students-repository'
 import { Student } from '@/domain/forum/enterprise/entities/student'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaStudentMapper } from '../mappers/prisma-student-mapper'
+import { StudentRepository } from '@/domain/forum/application/repositories/students-repository'
 
 @Injectable()
-export class PrismaStudentsRepository implements StudentsRepository {
+export class PrismaStudentsRepository implements StudentRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(student: Student): Promise<void> {
-    const data = PrismaStudentMapper.toPersistence(student)
+    const data = PrismaStudentMapper.toPrisma(student)
     await this.prisma.user.create({
       data,
     })

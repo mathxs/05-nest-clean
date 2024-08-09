@@ -7,7 +7,7 @@ import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { AttachmentFactory } from 'test/factories/make-attachments'
 import { QuestionFactory } from 'test/factories/make-question'
-import { QuestionAttachmentFactory } from 'test/factories/make-question-attachments'
+import { QuestionAttachmentFactory } from 'test/factories/make-question-attachment'
 import { StudentFactory } from 'test/factories/make-student'
 
 describe('Edit question (E2E)', () => {

@@ -1,10 +1,10 @@
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { QuestionComment } from '../../enterprise/entities/question-comments'
-import { QuestionsCommentsRepository } from '../repositories/question-comments-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { Injectable } from '@nestjs/common'
+import { QuestionCommentsRepository } from '../repositories/question-comments-repository'
 
 interface CommentOnQuestionUseCaseRequest {
   authorId: string
@@ -21,7 +21,7 @@ type CommentOnQuestionUseCaseResponse = Either<
 export class CommentOnQuestionUseCase {
   constructor(
     private questionsRepository: QuestionsRepository,
-    private questionsCommentsRepository: QuestionsCommentsRepository,
+    private questionsCommentsRepository: QuestionCommentsRepository,
   ) {}
 
   async execute({

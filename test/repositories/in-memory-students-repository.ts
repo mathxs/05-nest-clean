@@ -5,6 +5,8 @@ import { Student } from '@/domain/forum/enterprise/entities/student'
 export class InMemoryStudentsRepository implements StudentRepository {
   public items: Student[] = []
 
+  constructor() {}
+
   async create(student: Student) {
     this.items.push(student)
 

@@ -1,9 +1,9 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { AnswerCommentsRepository } from '@/domain/forum/application/repositories/answer-comments-repository'
-import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaAnswerCommentMapper } from '../mappers/prisma-answer-comment-mapper'
+import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comments'
 
 @Injectable()
 export class PrismaAnswerCommentsRepository
@@ -12,7 +12,7 @@ export class PrismaAnswerCommentsRepository
   constructor(private prisma: PrismaService) {}
 
   async create(answerComment: AnswerComment): Promise<void> {
-    const data = PrismaAnswerCommentMapper.toPersistence(answerComment)
+    const data = PrismaAnswerCommentMapper.toPrisma(answerComment)
     await this.prisma.comment.create({
       data,
     })
