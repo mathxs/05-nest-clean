@@ -1,6 +1,6 @@
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { Slug } from './value-objects/slug'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import dayjs from 'dayjs'
 import { QuestionAttachmentList } from './question-attachment-list'
@@ -8,8 +8,8 @@ import { QuestionBestAnswerChosenEvent } from '../events/question-best-answer-ch
 
 export interface QuestionProps {
   slug: Slug
-  authorId: UniqueEntityID
-  bestAnswerId?: UniqueEntityID | null
+  authorId: UniqueEntityId
+  bestAnswerId?: UniqueEntityId | null
   attachments: QuestionAttachmentList
 
   title: string
@@ -70,7 +70,7 @@ export class Question extends AggregateRoot<QuestionProps> {
     this.touch()
   }
 
-  set bestAnswerId(bestAnswerId: UniqueEntityID | undefined | null) {
+  set bestAnswerId(bestAnswerId: UniqueEntityId | undefined | null) {
     if (bestAnswerId && bestAnswerId !== this.props.bestAnswerId) {
       this.addDomainEvent(new QuestionBestAnswerChosenEvent(this, bestAnswerId))
     }
@@ -90,7 +90,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 
   static create(
     props: Optional<QuestionProps, 'createdAt' | 'slug' | 'attachments'>,
-    id?: UniqueEntityID,
+    id?: UniqueEntityId,
   ) {
     const question = new Question(
       {

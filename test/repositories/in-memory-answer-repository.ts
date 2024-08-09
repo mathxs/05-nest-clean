@@ -30,14 +30,14 @@ export class InMemoryAnswerRepository implements AnswersRepository {
     DomainEvents.dispatchEventsForAggregate(answer.id)
   }
 
-  async findByID(id: string) {
+  async findById(id: string) {
     const answer = this.items.find((item) => item.id.toString() === id)
 
     if (!answer) return null
     return answer
   }
 
-  async findManyByQuestiondId(questionId: string, { page }: PaginationParams) {
+  async findManyByQuestionId(questionId: string, { page }: PaginationParams) {
     const answers = this.items
       .filter((item) => item.questionId.toString() === questionId)
       .slice((page - 1) * 20, page * 20)

@@ -1,12 +1,12 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import { AnswerAttachmentList } from './answer-attachment-list'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { AnswerCreatedEvent } from '../events/answer-created-event'
 
 export interface AnswerProps {
-  authorId: UniqueEntityID
-  questionId: UniqueEntityID
+  authorId: UniqueEntityId
+  questionId: UniqueEntityId
   attachments: AnswerAttachmentList
 
   content: string
@@ -59,7 +59,7 @@ export class Answer extends AggregateRoot<AnswerProps> {
 
   static create(
     props: Optional<AnswerProps, 'createdAt' | 'attachments'>,
-    id?: UniqueEntityID,
+    id?: UniqueEntityId,
   ) {
     const answer = new Answer(
       {

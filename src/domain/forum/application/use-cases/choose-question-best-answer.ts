@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
@@ -27,14 +27,14 @@ export class ChooseQuestionBestAnswerUseCase {
     answerId,
     authorId,
   }: ChooseQuestionBestAnswerUseCaseRequest): Promise<ChooseQuestionBestAnswerUseCaseResponse> {
-    const answer = await this.answerRepository.findByID(answerId)
+    const answer = await this.answerRepository.findById(answerId)
 
     if (!answer) {
       // throw new Error('Answer not found.')
       return left(new ResourceNotFoundError())
     }
 
-    const question = await this.questionsRepository.findByID(
+    const question = await this.questionsRepository.findById(
       answer.questionId.toString(),
     )
 
@@ -48,7 +48,7 @@ export class ChooseQuestionBestAnswerUseCase {
       return left(new NotAllowedError())
     }
 
-    question.bestAnswerId = new UniqueEntityID(answerId)
+    question.bestAnswerId = new UniqueEntityId(answerId)
     await this.questionsRepository.save(question)
 
     return right({ question })

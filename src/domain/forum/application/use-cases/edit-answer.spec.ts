@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { EditAnswersUseCase } from './edit-answer'
 import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer-repository'
 import { makeAnswer } from 'test/factories/make-answer'
@@ -24,19 +24,19 @@ describe('Edit Answers', () => {
 
   test('should be able to Edit a answers', async () => {
     const newAnswers = makeAnswer(
-      { authorId: new UniqueEntityID('author-1') },
-      new UniqueEntityID('123'),
+      { authorId: new UniqueEntityId('author-1') },
+      new UniqueEntityId('123'),
     )
     await inMemoryAnswerssRepository.create(newAnswers)
 
     await inMemoryAnswerAttachmentsRepository.items.push(
       makeAnswerAttachment({
         answerId: newAnswers.id,
-        attachmentId: new UniqueEntityID('1'),
+        attachmentId: new UniqueEntityId('1'),
       }),
       makeAnswerAttachment({
         answerId: newAnswers.id,
-        attachmentId: new UniqueEntityID('2'),
+        attachmentId: new UniqueEntityId('2'),
       }),
     )
 
@@ -56,15 +56,15 @@ describe('Edit Answers', () => {
     expect(
       inMemoryAnswerssRepository.items[0].attachments.currentItems,
     ).toEqual([
-      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
-      expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityId('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityId('2') }),
     ])
   })
 
   test('should not be able to Edit a answers from another user', async () => {
     const newAnswers = makeAnswer(
-      { authorId: new UniqueEntityID('author-1') },
-      new UniqueEntityID('answers-1'),
+      { authorId: new UniqueEntityId('author-1') },
+      new UniqueEntityId('answers-1'),
     )
     await inMemoryAnswerssRepository.create(newAnswers)
     const result = await sut.execute({

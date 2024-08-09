@@ -3,7 +3,7 @@ import { AnswerComment } from '../../enterprise/entities/answer-comments'
 import { AnswerCommentsRepository } from '../repositories/answer-comments-repository'
 import { AnswersRepository } from '../repositories/answers-repository'
 
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { Injectable } from '@nestjs/common'
 
@@ -30,7 +30,7 @@ export class CommentOnAnswerUseCase {
     answerId,
     content,
   }: CommentOnAnswerUseCaseRequest): Promise<CommentOnAnswerUseCaseResponse> {
-    const answer = await this.answersRepository.findByID(answerId)
+    const answer = await this.answersRepository.findById(answerId)
 
     if (!answer) {
       // throw new Error('Answer not found')
@@ -38,8 +38,8 @@ export class CommentOnAnswerUseCase {
     }
 
     const answerComment = AnswerComment.create({
-      authorId: new UniqueEntityID(authorId),
-      answerId: new UniqueEntityID(answerId),
+      authorId: new UniqueEntityId(authorId),
+      answerId: new UniqueEntityId(answerId),
       content,
     })
 

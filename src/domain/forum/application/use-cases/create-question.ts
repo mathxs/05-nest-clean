@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Question } from '../../enterprise/entities/question'
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { Either, right } from '@/core/either'
@@ -28,12 +28,12 @@ export class CreateQuestionUseCase {
     const question = Question.create({
       title,
       content,
-      authorId: new UniqueEntityID(authorId),
+      authorId: new UniqueEntityId(authorId),
     })
 
     const questionAttachments = attachmentsIds.map((attachmentId) => {
       return QuestionAttachment.create({
-        attachmentId: new UniqueEntityID(attachmentId),
+        attachmentId: new UniqueEntityId(attachmentId),
         questionId: question.id,
       })
     })

@@ -1,18 +1,18 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
-import { InMemoryStudentRepository } from 'test/repositories/in-memory-students-repository'
 import { AuthenticateStudentUseCase } from './authenticate-student'
 import { FakeEncrypter } from 'test/cryptography/fake-encrypter'
 import { makeStudent } from 'test/factories/make-student'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 
-let inMemoryStudentsRepository: InMemoryStudentRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let sut: AuthenticateStudentUseCase
 let fakeHasher: FakeHasher
 let fakeEncrypter: FakeEncrypter
 
 describe('Authenticate Student', () => {
   beforeEach(() => {
-    inMemoryStudentsRepository = new InMemoryStudentRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
     fakeHasher = new FakeHasher()
     fakeEncrypter = new FakeEncrypter()
     sut = new AuthenticateStudentUseCase(

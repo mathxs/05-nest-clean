@@ -5,7 +5,7 @@ import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { AnswerAttachmentsRepository } from '../repositories/answer-attachments-repository'
 import { AnswerAttachmentList } from '../../enterprise/entities/answer-attachment-list'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { AnswerAttachment } from '../../enterprise/entities/answer-attchment'
 import { Injectable } from '@nestjs/common'
 
@@ -35,7 +35,7 @@ export class EditAnswersUseCase {
     content,
     attachmentsIds,
   }: EditAnswersUseCaseRequest): Promise<EditAnswersUseCaseResponse> {
-    const answers = await this.answerssRepository.findByID(answersId)
+    const answers = await this.answerssRepository.findById(answersId)
 
     if (!answers) {
       // throw new Error('Answers not found.')
@@ -55,7 +55,7 @@ export class EditAnswersUseCase {
 
     const answerAttachments = attachmentsIds.map((attachmentId) => {
       return AnswerAttachment.create({
-        attachmentId: new UniqueEntityID(attachmentId),
+        attachmentId: new UniqueEntityId(attachmentId),
         answerId: answers.id,
       })
     })

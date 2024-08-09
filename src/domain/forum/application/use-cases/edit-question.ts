@@ -5,7 +5,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
 import { QuestionAttachmentsRepository } from '../repositories/question-attachments-repository'
 import { QuestionAttachmentList } from '../../enterprise/entities/question-attachment-list'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { QuestionAttachment } from '../../enterprise/entities/question-attchment'
 import { Injectable } from '@nestjs/common'
 
@@ -36,7 +36,7 @@ export class EditQuestionUseCase {
     content,
     attachmentsIds,
   }: EditQuestionUseCaseRequest): Promise<EditQuestionUseCaseResponse> {
-    const question = await this.questionsRepository.findByID(questionId)
+    const question = await this.questionsRepository.findById(questionId)
 
     if (!question) {
       // throw new Error('Question not found.')
@@ -56,7 +56,7 @@ export class EditQuestionUseCase {
 
     const questionAttachments = attachmentsIds.map((attachmentId) => {
       return QuestionAttachment.create({
-        attachmentId: new UniqueEntityID(attachmentId),
+        attachmentId: new UniqueEntityId(attachmentId),
         questionId: question.id,
       })
     })

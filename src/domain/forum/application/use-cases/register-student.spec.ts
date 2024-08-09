@@ -1,15 +1,15 @@
 import { FakeHasher } from 'test/cryptography/fake-hasher'
-import { InMemoryStudentRepository } from 'test/repositories/in-memory-students-repository'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
 import { RegisterStudentUseCase } from './register-student'
 import { StudentAlreadyExistsError } from './errors/student-already-exists-error'
 
-let inMemoryStudentsRepository: InMemoryStudentRepository
+let inMemoryStudentsRepository: InMemoryStudentsRepository
 let sut: RegisterStudentUseCase
 let fakeHasher: FakeHasher
 
 describe('Register Student', () => {
   beforeEach(() => {
-    inMemoryStudentsRepository = new InMemoryStudentRepository()
+    inMemoryStudentsRepository = new InMemoryStudentsRepository()
     fakeHasher = new FakeHasher()
     sut = new RegisterStudentUseCase(inMemoryStudentsRepository, fakeHasher)
   })

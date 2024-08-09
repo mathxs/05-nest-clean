@@ -1,7 +1,7 @@
 import { QuestionsRepository } from '../repositories/questions-repository'
 import { QuestionComment } from '../../enterprise/entities/question-comments'
 import { QuestionsCommentsRepository } from '../repositories/question-comments-repository'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { Injectable } from '@nestjs/common'
@@ -29,7 +29,7 @@ export class CommentOnQuestionUseCase {
     questionId,
     content,
   }: CommentOnQuestionUseCaseRequest): Promise<CommentOnQuestionUseCaseResponse> {
-    const question = await this.questionsRepository.findByID(questionId)
+    const question = await this.questionsRepository.findById(questionId)
 
     if (!question) {
       // throw new Error('Question not found')
@@ -37,8 +37,8 @@ export class CommentOnQuestionUseCase {
     }
 
     const questionComment = QuestionComment.create({
-      authorId: new UniqueEntityID(authorId),
-      questionId: new UniqueEntityID(questionId),
+      authorId: new UniqueEntityId(authorId),
+      questionId: new UniqueEntityId(questionId),
       content,
     })
 

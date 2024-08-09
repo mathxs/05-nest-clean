@@ -29,7 +29,7 @@ export class InMemoryAnswersCommentsRepository
     return answerComment
   }
 
-  async findManyByAnswersId(questionId: string, { page }: PaginationParams) {
+  async findManyByAnswerId(questionId: string, { page }: PaginationParams) {
     const answerComment = this.items
       .filter((item) => item.answerId.toString() === questionId)
       .slice((page - 1) * 20, page * 20)

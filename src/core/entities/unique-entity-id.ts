@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto'
 
-export class UniqueEntityID {
+export class UniqueEntityId {
   private value: string
   // não entendi pq ele fez dois metodos iguais
   toString() {
@@ -15,7 +15,7 @@ export class UniqueEntityID {
     this.value = value ?? randomUUID()
   }
 
-  public equals(id: UniqueEntityID) {
+  public equals(id: UniqueEntityId) {
     return id.toValue() === this.value
   }
 }

@@ -1,6 +1,6 @@
 import { InMemoryAnswerRepository } from 'test/repositories/in-memory-answer-repository'
 import { AnswerQuestionUseCase } from './answer-question'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { InMemoryAnswerAttachmentsRepository } from 'test/repositories/in-memory-answer-attachmentes-repository'
 
 let inMemoryAnswerRepository: InMemoryAnswerRepository
@@ -31,8 +31,8 @@ describe('Create Answer', () => {
       inMemoryAnswerRepository.items[0].attachments.currentItems,
     ).toHaveLength(2)
     expect(inMemoryAnswerRepository.items[0].attachments.currentItems).toEqual([
-      expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
-      expect.objectContaining({ attachmentId: new UniqueEntityID('2') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityId('1') }),
+      expect.objectContaining({ attachmentId: new UniqueEntityId('2') }),
     ])
   })
 })

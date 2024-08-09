@@ -1,4 +1,4 @@
-import { AnswerAttachment } from '../../enterprise/entities/answer-attachment'
+import { AnswerAttachment } from '../../enterprise/entities/answer-attchment'
 
 export abstract class AnswerAttachmentsRepository {
   abstract createMany(attachments: AnswerAttachment[]): Promise<void>

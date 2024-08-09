@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { faker } from '@faker-js/faker'
 import {
   AnswerComment,
@@ -10,12 +10,12 @@ import { PrismaAnswerCommentMapper } from '@/infra/database/prisma/mappers/prism
 
 export function makeAnswerComment(
   override: Partial<AnswerCommentProps> = {},
-  id?: UniqueEntityID,
+  id?: UniqueEntityId,
 ) {
   const answer = AnswerComment.create(
     {
-      answerId: new UniqueEntityID(),
-      authorId: new UniqueEntityID(),
+      answerId: new UniqueEntityId(),
+      authorId: new UniqueEntityId(),
       content: faker.lorem.text(),
       ...override,
     },

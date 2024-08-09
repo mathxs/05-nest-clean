@@ -1,19 +1,19 @@
 import { FetchQuestionCommentsUseCase } from './fetch-question-comments'
-import { InMemoryQuestionCommentsRepository } from 'test/repositories/in-memory-question-comments-repository'
 import { makeQuestionComment } from 'test/factories/make-question-comment'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
-import { InMemoryStudentRepository } from 'test/repositories/in-memory-students-repository'
 import { makeStudent } from 'test/factories/make-student'
+import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
+import { InMemoryQuestionsCommentsRepository } from 'test/repositories/in-memory-questions-comments-repository'
 
-let inMemoryStudentRepository: InMemoryStudentRepository
-let inMemoryQuestionsCommentsRepository: InMemoryQuestionCommentsRepository
+let inMemoryStudentRepository: InMemoryStudentsRepository
+let inMemoryQuestionsCommentsRepository: InMemoryQuestionsCommentsRepository
 let sut: FetchQuestionCommentsUseCase
 
 describe('Fetch Questions Comments', () => {
   beforeEach(() => {
-    inMemoryStudentRepository = new InMemoryStudentRepository()
+    inMemoryStudentRepository = new InMemoryStudentsRepository()
     inMemoryQuestionsCommentsRepository =
-      new InMemoryQuestionCommentsRepository(inMemoryStudentRepository)
+      new InMemoryQuestionsCommentsRepository(inMemoryStudentRepository)
     sut = new FetchQuestionCommentsUseCase(inMemoryQuestionsCommentsRepository)
   })
 

@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Answer } from '@/domain/forum/enterprise/entities/answer'
 import { Answer as PrismaAnswer, Prisma } from '@prisma/client'
 
@@ -6,13 +6,13 @@ export class PrismaAnswerMapper {
   static toDomain(raw: PrismaAnswer): Answer {
     return Answer.create(
       {
-        questionId: new UniqueEntityID(raw.questionId),
+        questionId: new UniqueEntityId(raw.questionId),
         content: raw.content,
-        authorId: new UniqueEntityID(raw.authorId),
+        authorId: new UniqueEntityId(raw.authorId),
         createdAt: raw.createdAt,
         updateAt: raw.updatedAt,
       },
-      new UniqueEntityID(raw.id),
+      new UniqueEntityId(raw.id),
     )
   }
 

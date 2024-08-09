@@ -1,7 +1,7 @@
 import { InMemoryQuestionsRepository } from 'test/repositories/in-memory-questions-repository'
 import { makeQuestion } from 'test/factories/make-question'
 import { DeleteQuestionUseCase } from './delete-question'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { InMemoryQuestionAttachmentsRepository } from 'test/repositories/in-memory-question-attachments-repository'
 import { makeQuestionAttachment } from 'test/factories/make-question-attachment'
 
@@ -21,19 +21,19 @@ describe('Delete Question', () => {
 
   test('should be able to delete a question', async () => {
     const newQuestion = makeQuestion(
-      { authorId: new UniqueEntityID('author-1') },
-      new UniqueEntityID('123'),
+      { authorId: new UniqueEntityId('author-1') },
+      new UniqueEntityId('123'),
     )
     await inMemoryQuestionsRepository.create(newQuestion)
 
     inMemoryQuestionAttachmentsRepository.items.push(
       makeQuestionAttachment({
         questionId: newQuestion.id,
-        attachmentId: new UniqueEntityID('1'),
+        attachmentId: new UniqueEntityId('1'),
       }),
       makeQuestionAttachment({
         questionId: newQuestion.id,
-        attachmentId: new UniqueEntityID('2'),
+        attachmentId: new UniqueEntityId('2'),
       }),
     )
 
@@ -48,8 +48,8 @@ describe('Delete Question', () => {
 
   test('should not be able to delete a question from another user', async () => {
     const newQuestion = makeQuestion(
-      { authorId: new UniqueEntityID('author-1') },
-      new UniqueEntityID('123'),
+      { authorId: new UniqueEntityId('author-1') },
+      new UniqueEntityId('123'),
     )
     await inMemoryQuestionsRepository.create(newQuestion)
 

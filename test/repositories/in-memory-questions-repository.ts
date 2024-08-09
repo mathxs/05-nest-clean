@@ -41,7 +41,7 @@ export class InMemoryQuestionsRepository implements QuestionsRepository {
     return question
   }
 
-  async findByID(id: string) {
+  async findById(id: string) {
     const question = this.items.find((item) => item.id.toString() === id)
 
     if (!question) return null

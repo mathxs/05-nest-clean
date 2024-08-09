@@ -24,7 +24,7 @@ export class OnQuestionBestAnswerChosen implements EventHandler {
     bestAnswerId,
   }: QuestionBestAnswerChosenEvent) {
     // console.log(question)
-    const answer = await this.answerRespository.findByID(
+    const answer = await this.answerRespository.findById(
       bestAnswerId.toString(),
     )
     // send notification

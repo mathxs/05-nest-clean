@@ -1,9 +1,9 @@
 import { Entity } from '@/core/entities/entity'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 
 export interface NotificationProps {
-  recipientId: UniqueEntityID
+  recipientId: UniqueEntityId
 
   title: string
   content: string
@@ -39,7 +39,7 @@ export class Notification extends Entity<NotificationProps> {
 
   static create(
     props: Optional<NotificationProps, 'createdAt'>,
-    id?: UniqueEntityID,
+    id?: UniqueEntityId,
   ) {
     const notification = new Notification(
       {

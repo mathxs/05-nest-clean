@@ -1,4 +1,4 @@
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import {
   Student,
   StudentProps,
@@ -10,7 +10,7 @@ import { Injectable } from '@nestjs/common'
 
 export function makeStudent(
   override: Partial<StudentProps> = {},
-  id?: UniqueEntityID,
+  id?: UniqueEntityId,
 ) {
   const student = Student.create(
     {

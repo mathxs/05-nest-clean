@@ -1,8 +1,8 @@
 import { makeNotification } from 'test/factories/make-notification'
 import { ReadNotificationUseCase } from './read-notification'
-import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notifications-repository'
 import { UniqueEntityId } from '@/core/entities/unique-entity-id'
 import { NotAllowedError } from '@/core/errors/errors/not-allowed-error'
+import { InMemoryNotificationsRepository } from 'test/repositories/in-memory-notification-repository'
 
 let inMemoryNotificationsRepository: InMemoryNotificationsRepository
 let sut: ReadNotificationUseCase
@@ -20,7 +20,7 @@ describe('Read Notification', () => {
 
     const result = await sut.execute({
       recipientId: notification.recipientId.toString(),
-      notificationtId: notification.id.toString(),
+      notificationId: notification.id.toString(),
     })
 
     expect(result.isRight()).toBe(true)
@@ -37,7 +37,7 @@ describe('Read Notification', () => {
     await inMemoryNotificationsRepository.create(notification)
 
     const result = await sut.execute({
-      notificationtId: notification.id.toString(),
+      notificationId: notification.id.toString(),
       recipientId: 'recipient-2',
     })
 
