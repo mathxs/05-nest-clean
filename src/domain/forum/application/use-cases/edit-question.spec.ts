@@ -51,7 +51,6 @@ describe('Edit Question', () => {
       content: 'Alteração do conteudo',
       attachmentsIds: ['1', '3'],
     })
-
     expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
       title: 'Pergunta alterada',
       content: 'Alteração do conteudo',
@@ -121,6 +120,7 @@ describe('Edit Question', () => {
       attachmentsIds: ['1', '3'],
     })
 
+    console.log(inMemoryQuestionAttachmentsRepository.items)
     expect(result.isRight()).toBe(true)
     expect(inMemoryQuestionAttachmentsRepository.items).toHaveLength(2)
     expect(inMemoryQuestionAttachmentsRepository.items).toEqual(
