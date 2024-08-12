@@ -13,6 +13,8 @@ let sut: CommentOnAnswerUseCase
 
 describe('Chosse Answer Best Answer', () => {
   beforeEach(() => {
+    inMemoryAnswerAttachmentsRepository =
+      new InMemoryAnswerAttachmentsRepository()
     studentsRepository = new InMemoryStudentsRepository()
     inMemoryAnswerRepository = new InMemoryAnswerRepository(
       inMemoryAnswerAttachmentsRepository,
